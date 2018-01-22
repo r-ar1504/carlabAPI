@@ -15,15 +15,7 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-# CORS_ORIGIN_ALLOW_ALL = True
-# CORS_ALLOW_METHODS = (
-#     'DELETE',
-#     'GET',
-#     'OPTIONS',
-#     'PATCH',
-#     'POST',
-#     'PUT',
-# )
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
@@ -41,7 +33,6 @@ ALLOWED_HOSTS = ["*"]
 
 INSTALLED_APPS = [
     'django.contrib.admin',
-    'corsheaders',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -53,7 +44,6 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -87,11 +77,10 @@ WSGI_APPLICATION = 'carlab.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'carlabDB'  ,
-        'DATABASE': 'carlabDB',
-        'USER': 'root',
-        'PASSWORD': 'root',
-        'HOST': 'localhost',
+        'DATABASE': 'carlabdb',
+        'USER': 'carlabAdmin@carlab-mysqldbserver',
+        'PASSWORD': 'carLAb2332',
+        'HOST': 'carlab-mysqldbserver.mysql.database.azure.com',
     }
 }
 
@@ -123,7 +112,7 @@ LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'America/Mexico_City'
 
 USE_I18N = True
-
+g
 USE_L10N = True
 
 USE_TZ = True
