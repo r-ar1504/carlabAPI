@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render
-from .models import Service, Category, Worker, Order
+from .models import Service, Category, Worker, Order, SubCategory
 from django.http import JsonResponse, HttpResponse
 from django.views.decorators.http import *
 from django.forms.models import model_to_dict
@@ -24,10 +24,29 @@ def services(request):
 
 @require_GET
 def get_categories(request, service_id):
-    data = Category.objects.filter(service_id = service_id).values('name', 'price', 'duration', 'id', 'image')
+
+    subcategories = []
+    categories = Category.objects.filter(service_id = service_id).values('name', 'price', 'duration', 'id', 'image', 'sub_cat')
+
+    for category in categories:
+
+        if category['sub_cat'] != False:
+            sub_category = getSubCategories(category['id'])
+
+        else:
+
+
+
     return JsonResponse({
-    'data': list(data)
+    'category': list(data),
+    'sub_categories': list(sub_category)
     })
+
+    return JsonResponse({
+    'category': list(data),
+    })
+
+
     # return HttpResponse(content=list(data), content_type="application/json",status=200)
 
 @require_GET
@@ -57,9 +76,7 @@ def getWorker(request):
     orders = getWorkerOrders(workerID, role)
 
     return JsonResponse({
-    'worker': worker,
-    'worker_orders': orders,
-    'status': '200'
+    'worker': worker
     })
 
 @csrf_exempt
@@ -113,8 +130,15 @@ def doneOrder(request):
 #<!-- Fetch Orders By Worker ID -->
 def getWorkerOrders(workerID, role):
 
-    orders = model_to_dict(Order.objects.get(worker = workerID, status = "active", service = role))
+    orders = model_to_dict( Order.objects.get( worker = workerID, status = "active", service = role ) )
 
     return orders
+
+#<!-- Fetch SubCategory By Category ID -->
+def getSubCategories( category_id ):
+
+    sub_categories = model_to_dict( SubCategory.objects.get( category_id = category_id ) )
+
+    return sub_categories
 
 #<!------------------------------------------------------------------------------------------------>
